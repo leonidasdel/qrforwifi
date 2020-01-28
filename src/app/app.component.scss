@@ -3,7 +3,10 @@ body{
     background-color:#efefef;
    
 }
-  a, a:hover{
+a, a:hover{
     color:#333
     
-  }
+}
+li {
+    list-style-position: inside;
+}
