@@ -22,7 +22,7 @@
     </div>  
   </div> -->
 <div id="buttonhelper" style="height: 50px;"></div>
-  <form   (ngSubmit)="preventRefresh($event)" style="width: 500px; margin:0 auto;">
+  <form    style="width: 500px; margin:0 auto;">
     <div class="form-group"  >
       <label for="exampleInput">Wifi Name(SSID)</label>
         <input  (input)="addssid($event)" type="text" placeholder="Type your wifi name verbatim" id="exampleInput" class="form-control " required > 
@@ -45,11 +45,15 @@
     </div>
 
   
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" (click)="preventRefresh($event)" class="btn btn-primary">Submit</button>
+    <button type="submit" style="width: 120px;margin-left: 12px;"  (click)="generatepdf($event)" id="generatepdf" class="btn btn-primary">Print Qrcode</button>
   </form>
-  <div  style="height:400px" class="d-flex justify-content-center mt-5 "> 
-     <canvas  id="canvas"></canvas>
+ 
+  <div  style="height:400px;" class="d-flex flex-column justify-content-center mt-5 "> 
+     <canvas style="margin: 0 auto;" id="canvas"></canvas>
+    
     </div>
+   
 
   <div class="jumbotron mb-0 " style="background-color: #0069d9;color:white;">
     <h1 class="display-4 text-center">Instructions</h1>
@@ -59,4 +63,5 @@
       <li class="text-center mr-5 mt-3 " style="font-size: 20px;">Select your wifi encryption (usually it's WPA2)</li>
     </ol>
     </div>
+    
 

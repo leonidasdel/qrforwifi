@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ValueProvider } from '@angular/core';
 import QRCode from "qrcode"
+import * as pdfMake from '../../node_modules/pdfmake/build/pdfmake';
+import * as pdfFonts from '../../node_modules/pdfmake/build/vfs_fonts';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,7 +9,10 @@ import QRCode from "qrcode"
 })
 export class AppComponent {
   
-  
+constructor(){
+  pdfMake.vfs = pdfFonts.pdfMake.vfs;
+}
+dd;
   ssid:String;
   password:String;
   encryption:String="WPA";
@@ -39,11 +44,31 @@ export class AppComponent {
     this.encryption=$event.target.value
   }
   preventRefresh($event){
-$event.preventDefault();
+      $event.preventDefault();
      QRCode.toCanvas(document.getElementById('canvas'),  "WIFI:"+ "T:" + this.encryption + ";"+ "S:" + this.ssid + ";" + "P:" + this.password +";" + "H:" + "true" + ";" + ";",this.options, function (error) {
    if (error) console.error(error)
     console.log('success!');
   }) 
+    
+
+  
+
+  }
+
+  generatepdf($event){
+    
+    this.dd = {
+      pageSize: 'A4',
+      
+      content: [
+     {text:`Wifi name: ${this.ssid}`,alignment:'center',
+     fontSize:30,margin:[0,195,0,0]},{text:`Wifi password: ${this.password}`,
+     alignment:'center',fontSize:30,margin:[0,25,0,0]},{ qr: "WIFI:"+ "T:" + this.encryption + ";"+ "S:" + this.ssid + ";" + "P:" + 
+     this.password +";" + "H:" + "true" + ";" + ";",alignment:'center', margin:[0,35,0,0],fit: '250'}
+    ]
+  }
+    pdfMake.createPdf(this.dd).open({}, window);
+
   }
   scrollpx($event){
     // window.scrollBy({ 
